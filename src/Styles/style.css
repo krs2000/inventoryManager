@@ -1,0 +1,13 @@
+.whiteFont {
+	color:white;
+}
+
+
+
+a:link {
+	text-decoration: none;
+}
+a:visited {color: purple;}
+a:hover {color: #69c;
+text-decoration: none;}
+a:active {color: #69c;}
