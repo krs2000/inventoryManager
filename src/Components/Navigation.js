@@ -2,6 +2,7 @@ import React from "react";
 import { BrowserRouter as Router, Route, Link } from "react-router-dom";
 import { Navbar, Nav, NavItem, NavDropdown, MenuItem } from 'react-bootstrap';
 import AddItem from "./AddItem";
+import Receipt from "./Receipt";
 
 const Navigation = () => (
   <Router>
@@ -17,16 +18,16 @@ const Navigation = () => (
         <Navbar.Collapse >
           <Nav className="Link">
             <NavItem >
-            <Link to="/"><span className="whiteFont"> Home</span></Link>
+            <Link to="/"><span className="whiteFont">Home</span></Link>
             </NavItem>
             <NavItem > 
-               <Link to="/about"><span className="whiteFont"> About</span></Link>
-            </NavItem>
-              <NavItem>
                <Link to="/add"><span className="whiteFont">Add Item</span></Link>
             </NavItem>
               <NavItem>
-                <Link to="/topics"><span className="whiteFont">Topics</span></Link>
+               <Link to="/receipt"><span className="whiteFont">New Receipt</span></Link>
+            </NavItem>
+              <NavItem>
+                <Link to="/topics"><span className="whiteFont">New Ticket</span></Link>
             </NavItem>
             <NavDropdown title="Dropdown" id="basic-nav-dropdown">
               <MenuItem >Action</MenuItem>
@@ -50,7 +51,7 @@ const Navigation = () => (
       <hr />
 
       <Route exact path="/" component={Home} />
-      <Route path="/about" component={About} />
+      <Route path="/receipt" component={Receipt} />
       <Route path="/topics" component={Topics} />
       <Route path="/add" component={AddItem} />
     </div>

@@ -1,26 +1,45 @@
 import React, { Component } from "react";
 
+import Table from './Table'
+
+const tableData = [];
 class AddItem extends Component {
 	constructor(props) {
 		super(props);
 		this.state = {
-			name: "",
-			value: ""
+	  id: 100,
+      name: "",
+      description: "",
+      category : "",
+  
+
 		};
 	}
-
-	// addItem(){
-	// 	console.log("this state",this);
-	// 	const {title} = this.state;
-	// 	const {email} = this.props.user;
-	// 	goalRef.push ({email, title})
-	// }
+	
 
 	addItem() {
+
+
 		console.log("this state", this.state);
+		const {id} = this.state;
+		const {name} = this.state;
+		const {description} = this.state;
+		const {category}= this.state;
+		console.log(name)
+		tableData.push({name,description,category,id})
+		console.log(tableData);
+		this.setState({id: this.state.id + 1})
+
 	}
 
+
 	render() {
+
+
+
+
+
+
 		return (
 			<div>
 				<div className="form-inline reminder-form">
@@ -34,12 +53,19 @@ class AddItem extends Component {
 						/>
 						<input
 							className="form-control"
-							type="number"
-							placeholder="amount"
+							placeholder="description"
 							onChange={event =>
-								this.setState({ value: event.target.value })
+								this.setState({ description: event.target.value })
 							}
 						/>
+						<input
+							className="form-control"
+							placeholder="category"
+							onChange={event =>
+								this.setState({ category: event.target.value })
+							}
+						/>
+
 					</div>
 
 					<button
@@ -50,9 +76,14 @@ class AddItem extends Component {
 						Add Item
 					</button>
 				</div>
+				<hr/>
+				<div className="pt-4">
+				<Table products ={tableData}/>
+				</div>
 			</div>
 		);
 	}
 }
 
+                                                                      
 export default AddItem;
