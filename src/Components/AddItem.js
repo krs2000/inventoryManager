@@ -81,6 +81,9 @@ class AddItem extends Component {
 				<div className="pt-4">
 				<Table products ={this.props.items}/>
 				</div>
+				
+
+
 			</div>
 		);
 	}

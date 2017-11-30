@@ -1,4 +1,4 @@
-import {ADD_ITEM,SIGNED_IN} from "../constants"
+import {ADD_ITEM, SIGNED_IN, ADD_RECEIPT} from "../constants"
 
 export const add_item = (item) => {
 
@@ -22,4 +22,16 @@ export function logUser(email){
 	}
 
 	return action;
+}
+
+export const add_receipt = (receipt) => {
+
+const action={
+	type: ADD_RECEIPT,
+	receipt
+}
+
+console.log("action add_RECEIPTy",action)
+return action;
+
 }
