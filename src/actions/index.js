@@ -1,11 +1,10 @@
-import {ADD_INVENTORY,SIGNED_IN} from "../constants"
+import {ADD_ITEM,SIGNED_IN} from "../constants"
 
-export const add_inventory = (data) => {
+export const add_item = (item) => {
 
 const action={
-	type:ADD_INVENTORY,
-	data
-
+	type:ADD_ITEM,
+	item
 }
 
 console.log("action add_inventory",action)

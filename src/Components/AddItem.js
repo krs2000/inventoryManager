@@ -1,8 +1,10 @@
 import React, { Component } from "react";
-
+import { connect } from "react-redux";
 import Table from './Table'
+import {add_item} from '../actions'
 
-const tableData = [];
+
+
 class AddItem extends Component {
 	constructor(props) {
 		super(props);
@@ -21,14 +23,13 @@ class AddItem extends Component {
 
 
 		console.log("this state", this.state);
-		const {id} = this.state;
-		const {name} = this.state;
-		const {description} = this.state;
-		const {category}= this.state;
-		console.log(name)
-		tableData.push({name,description,category,id})
-		console.log(tableData);
-		this.setState({id: this.state.id + 1})
+		const { id, name, description, category } = this.state;
+
+
+		this.props.dispatch(add_item({ id, name, description, category }));
+
+		this.setState({id: this.state.id + 1});
+		console.log(this.props.items);
 
 	}
 
@@ -78,12 +79,20 @@ class AddItem extends Component {
 				</div>
 				<hr/>
 				<div className="pt-4">
-				<Table products ={tableData}/>
+				<Table products ={this.props.items}/>
 				</div>
 			</div>
 		);
 	}
 }
 
+
+function mapStateToProps(state) {
+	// console.log("state,", state);
+	return {
+		items: state.itemReducer.items
+	};
+}
+
                                                                       
-export default AddItem;
+export default connect(mapStateToProps, null)(AddItem);

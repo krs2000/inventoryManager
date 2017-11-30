@@ -37,7 +37,7 @@ class App extends Component {
 									</Link>
 								</NavItem>
 								<NavItem>
-									<0 to="/add">
+									<Link to="/add">
 										<span className="whiteFont">
 											Add Item
 										</span>
@@ -114,4 +114,4 @@ function mapStateToProps(state) {
 	return {};
 }
 
-export default withRouter(0(App));
+export default withRouter(connect(mapStateToProps, null)(App));
