@@ -4,12 +4,15 @@ import "../Styles/style.css";
 
 import { Navbar, Nav, NavItem, NavDropdown, MenuItem } from "react-bootstrap";
 
-import {withRouter, BrowserRouter as Router, Route, Link } from "react-router-dom";
+import {  Router, Route, Link } from "react-router";
 import { connect } from "react-redux";
 
 import AddItem from "./AddItem";
 import Receipt from "./Receipt";
 import { firebaseApp } from "../firebase";
+
+
+
 
 class App extends Component {
 	signOut() {
@@ -17,10 +20,12 @@ class App extends Component {
 	}
 
 
+	
+
 
 	render() {
 		return (
-			<Router>
+			<Router path="/" history={browserHistory}>
 				<div>
 					<Navbar inverse collapseOnSelect>
 						<Navbar.Header>
@@ -37,7 +42,7 @@ class App extends Component {
 									</Link>
 								</NavItem>
 								<NavItem>
-									<0 to="/add">
+									<Link to="/add">
 										<span className="whiteFont">
 											Add Item
 										</span>
@@ -109,9 +114,9 @@ class App extends Component {
 	}
 }
 
-function mapStateToProps(state) {
-	// console.log("state,", state);
-	return {};
-}
 
-export default withRouter(0(App));
+function mapStateToProps(state){
+	// console.log("state,", state);
+	return{}
+}
+export default connect(mapStateToProps,null)(App);

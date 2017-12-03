@@ -8,15 +8,19 @@ const cellEditProp = {
 };
 
 class Table extends Component {
+  
+
 
   render() {
-    return (
+    return (<div>
       <BootstrapTable data={ this.props.products }  cellEdit={ cellEditProp } >
         <TableHeaderColumn dataField='id' isKey>Product ID</TableHeaderColumn>
         <TableHeaderColumn dataField='name'>Product Name</TableHeaderColumn>
    		  <TableHeaderColumn dataField='description'>Description</TableHeaderColumn>
    		 <TableHeaderColumn dataField='category'>Category</TableHeaderColumn>
+       <TableHeaderColumn dataField='amount'>Amount</TableHeaderColumn>
       </BootstrapTable>
+      </div>
     );
   }
 }

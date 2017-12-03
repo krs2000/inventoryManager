@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import {firebaseApp} from '../firebase';
-import{Link} from "react-router-dom";
+import{Link} from "react-router";
 
 class SignIn extends Component{
 

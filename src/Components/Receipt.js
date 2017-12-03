@@ -2,7 +2,9 @@ import React, { Component } from "react";
 import MyDatePicker from "./DatePicker";
 import { FormGroup, ControlLabel, FormControl } from "react-bootstrap";
 import { connect } from "react-redux";
-import {add_receipt} from '../actions'
+
+import {add_receipt} from '../actions';
+import Navigation from "./Navigation";
 
 class Receipt extends Component {
 	constructor(props) {
@@ -31,6 +33,7 @@ class Receipt extends Component {
 	render() {
 		return (
 			<div>
+			<Navigation/>
 				<form className="form-group">
 					<input
 						placeholder="Receipt Reference"
@@ -80,17 +83,8 @@ class Receipt extends Component {
 	}
 }
 
-// const AddItem  =()=> ( return
 
-// 	  <FormGroup controlId="formControlsSelect">
-//       <ControlLabel>Select</ControlLabel>
-//       <FormControl componentClass="select" placeholder="select">
-//         <option value="select">select</option>
-//         <option value="other">...</option>
-//       </FormControl>
-//     </FormGroup>)
 function mapStateToProps(state) {
-	// console.log("state,", state);
 	return {
 		items: state.itemReducer.items,
 		receipts:  state.itemReducer.receipts
