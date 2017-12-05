@@ -11,3 +11,9 @@ a:visited {color: purple;}
 a:hover {color: #69c;
 text-decoration: none;}
 a:active {color: #69c;}
+
+
+
+.smallMarginBottom{
+	margin-bottom: 10px
+}

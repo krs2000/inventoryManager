@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import MyDatePicker from "./DatePicker";
-import { FormGroup, ControlLabel, FormControl } from "react-bootstrap";
+import { FormGroup, ControlLabel, FormControl ,Col, Grid} from "react-bootstrap";
 import { connect } from "react-redux";
 
 import { add_receipt } from "../actions";
@@ -8,12 +8,7 @@ import Navigation from "./Navigation";
 import { update_inventory } from "../actions";
 
 class Receipt extends Component {
-	constructor(props) {
-		super(props);
-		this.state = {
-			ReceiptId: 1
-		};
-	}
+
 
 	addReceipt() {
 		const { reference, date, price, amount } = this.state;
@@ -39,17 +34,24 @@ class Receipt extends Component {
 		return (
 			<div>
 				<Navigation />
+				<Grid>
 				<form className="form-group">
+
+					<Col xs={12} md={3} className="receiptReferenceAndDate">
+					
 					<input
 						placeholder="Receipt Reference"
+						className="form-control smallMarginBottom"
 						onChange={event =>
 							this.setState({ reference: event.target.value })
 						}
 					/>
+
 					<MyDatePicker />
-					<div className="col-xs-2">
+					</Col>
+					<Col xs={12} md={2} className="smallMarginBottom">
 						<select
-							className=" form-control"
+							className="form-control"
 							onChange={event =>
 								this.setState({ name: event.target.value })
 							}
@@ -63,27 +65,36 @@ class Receipt extends Component {
 								);
 							})}
 						</select>
-					</div>
+					</Col>
+					<Col xs={12} md={2} className="smallMarginBottom">
 					<input
 						placeholder="amount"
+						className="form-control"
 						onChange={event =>
 							this.setState({ amount: event.target.value })
 						}
 					/>
+					</Col>
+					<Col xs={12} md={2} className="smallMarginBottom">
 					<input
 						placeholder="price"
+						className="form-control"
 						onChange={event =>
 							this.setState({ price: event.target.value })
 						}
 					/>
+					</Col>
+					<Col xs={12} md={2} className="smallMarginBottom" >
 					<button
 						type="button"
-						className="btn btn-success"
+						className="btn btn-info"
 						onClick={() => this.addReceipt()}
 					>
 						Add Receipt
 					</button>
-				</form>				
+					</Col>
+				</form>	
+				</Grid>			
 			</div>
 		);
 	}
