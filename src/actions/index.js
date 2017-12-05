@@ -1,4 +1,4 @@
-import {ADD_ITEM, SIGNED_IN, ADD_RECEIPT} from "../constants"
+import {ADD_ITEM, SIGNED_IN, ADD_RECEIPT , INVENTORY} from "../constants"
 
 export const add_item = (item) => {
 
@@ -6,8 +6,17 @@ const action={
 	type:ADD_ITEM,
 	item
 }
+return action;
+}
 
-console.log("action add_inventory",action)
+
+export const update_inventory = (inventory) => {
+
+const action={
+	type:INVENTORY,
+	inventory
+}
+
 return action;
 
 }

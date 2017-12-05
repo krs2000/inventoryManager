@@ -7,6 +7,8 @@ import { add_receipt } from "../actions";
 import Navigation from "./Navigation";
 import { update_inventory } from "../actions";
 
+
+
 class Receipt extends Component {
 	constructor(props) {
 		super(props);
@@ -24,16 +26,43 @@ class Receipt extends Component {
 
 		for (let i = 0; i < this.props.items.length; i++) {
 			if (name === this.props.items[i].name) {
-				let sum = 0;
-				sum =
-					parseInt(this.props.items[i].amount, 10) +
-					parseInt(this.state.amount, 10);
-				this.props.items[i].amount = sum;
+				this.setState(
+					{
+						itemId: this.props.items[i].itemId,
+						description: this.props.items[i].description,
+						category: this.props.items[i].category
+					},
+					function() {
+						const { itemId, description, category } = this.state;
+						this.props.dispatch(
+							update_inventory({
+								itemId,
+								name,
+								description,
+								category,
+								amount
+							})
+						);
+					}
+				);
 			}
 		}
+
+		
+
+
+		
+			}
+
+	
+
+
+	lol() {
+
+
+		
+	
 	}
-
-
 
 	render() {
 		return (
@@ -57,9 +86,7 @@ class Receipt extends Component {
 							<option>Choose</option>
 							{this.props.items.map(item => {
 								return (
-									<option key={item.itemId}>
-										{item.name}
-									</option>
+									<option key={item.itemId}>{item.name}</option>
 								);
 							})}
 						</select>
@@ -83,7 +110,10 @@ class Receipt extends Component {
 					>
 						Add Receipt
 					</button>
-				</form>				
+				</form>
+				<button type="button" onClick={() => this.lol()}>
+					lol
+				</button>
 			</div>
 		);
 	}

@@ -4,6 +4,7 @@ import { connect } from "react-redux";
 import Table from './Table';
 import Navigation from "./Navigation";
 import AddItem from "./AddItem";
+import { add_item } from "../actions";
 
 class Inventory extends Component{
 
@@ -11,30 +12,66 @@ class Inventory extends Component{
 		super(props);
 		this.state={
 		items:[],
-		id:0
-
+		receipts:[],
+		amount:0
 		}
 	}
 
-componentWillReceiveProps (newProps) {
-  if( newProps.items !== this.props.items ){
-   this.setState({data: this.state.id+1})}
-}
+addItem() {
+		console.log("this state", this.state);
+		const { name, description, category ,amount } = this.state;
+		const itemId =Math.random();
+		this.props.dispatch(add_item({ itemId, name, description, category, amount }));
+		this.setState({ itemId: this.state.itemId + 1 });
+
+	}
 
 
 
 
-lol(){
-	()=>console.log(this.props.items);
-	this.setState({data: this.state.id+1})
-}
+
 
 
 	render(){
 		return(
 			<div>
  			<Navigation/>
- 			<AddItem/>
+ 			<div>
+				<div className="form-inline reminder-form">
+					<div className="form-group">
+						<input
+							className="form-control"
+							placeholder="Item Name"
+							onChange={event =>
+								this.setState({ name: event.target.value })
+							}
+						/>
+						<input
+							className="form-control"
+							placeholder="description"
+							onChange={event =>
+								this.setState({
+									description: event.target.value
+								})
+							}
+						/>
+						<input
+							className="form-control"
+							placeholder="category"
+							onChange={event =>
+								this.setState({ category: event.target.value })
+							}
+						/>
+					</div>
+					<button
+						type="button"
+						className="btn btn-success"
+						onClick={() => this.addItem()}
+					>
+						Add Item
+					</button>
+				</div>
+			</div>
     				<hr/>
 
 
@@ -43,7 +80,6 @@ lol(){
 				</div>
 
 
-				<button onClick={ ()=>this.lol() }>Update</button>
 
   			  </div>
 
@@ -56,11 +92,15 @@ lol(){
 
 
 
+
+
 function mapStateToProps(state) {
 	// console.log("state,", state);
 	return {
-		items: state.itemReducer.items
+		items: state.itemReducer.items,
+		receipts: state.receiptReducer.receipts,
+		inventory: state.inventoryReducer.inventories
 	};
 }
-export default connect(mapStateToProps, null)(Inventory);
+export default connect(mapStateToProps)(Inventory);
 

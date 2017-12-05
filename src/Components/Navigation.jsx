@@ -2,8 +2,7 @@ import React, { Component } from "react";
 
 import { Navbar, Nav, NavItem, NavDropdown, MenuItem } from "react-bootstrap";
 
-import { Link } from "react-router";
-import { connect } from "react-redux";
+
 
 import { firebaseApp } from "../firebase";
 import { browserHistory } from "react-router";

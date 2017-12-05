@@ -7,15 +7,15 @@ class AddItem extends Component {
 	constructor(props) {
 		super(props);
 		this.state = {
-			id: 100
-		
+			id: 100,
+			amount:0
 		};
 	}
 
 	addItem() {
 		console.log("this state", this.state);
-		const { id, name, description, category } = this.state;
-		this.props.dispatch(add_item({ id, name, description, category }));
+		const { id, name, description, category ,amount } = this.state;
+		this.props.dispatch(add_item({ id, name, description, category, amount }));
 		this.setState({ id: this.state.id + 1 });
 	}
 
@@ -57,7 +57,7 @@ class AddItem extends Component {
 						Add Item
 					</button>
 				</div>
-		
+
 			</div>
 		);
 	}
