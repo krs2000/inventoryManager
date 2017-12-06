@@ -8,13 +8,18 @@ import Navigation from "./Navigation";
 import { update_inventory } from "../actions";
 
 class Ticket extends Component {
-
+		constructor(props){
+		super(props);
+		this.state={
+		type :"ticket"
+	}
+}
 
 	addTicket() {
-		const { reference, date, price, amount } = this.state;
+		const { reference, date, price, amount , type } = this.state;
 		let { name } = this.state;
 		this.props.dispatch(
-			add_receipt({ reference, date, price, name, amount })
+			add_receipt({ reference, date, price, name, amount ,type})
 		);
 
 		for (let i = 0; i < this.props.items.length; i++) {

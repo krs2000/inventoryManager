@@ -9,7 +9,7 @@ import {firebaseApp} from './firebase';
 import {logUser} from './actions';
 import reducer from './reducers';
 
-import App from './Components/App';
+
 import SignIn from './Components/SignIn';
 import SignUp from './Components/SignUp';
 import Inventory from './Components/Inventory';
@@ -28,7 +28,7 @@ if (user){
 	// console.log('user has signed up', user);
 	const {email} = user ;
 	store.dispatch(logUser(email));
-	browserHistory.push('/app');
+	browserHistory.push('/Transactions');
 	
 } else {
 
@@ -43,13 +43,12 @@ if (user){
 ReactDOM.render(
 <Provider store={store}>
 <Router path="/" history={browserHistory}>
-<Route path="/app" component = {App} />
 <Route path="/Signin" component = {SignIn}/>
 <Route path="/Signup" component = {SignUp}/>
 <Route path="/Inventory" component = {Inventory}/>
 <Route path="/Receipt" component = {Receipt}/>
 <Route path="/Ticket" component = {Ticket}/>
-<Route path="/home" component = {Inventory}/>
+<Route path="/Transactions" component = {Transactions}/>
 </Router>
 </Provider>
 , document.getElementById('root')

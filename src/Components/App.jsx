@@ -5,7 +5,7 @@ import "../Styles/style.css";
 
 import { connect } from "react-redux";
 
-import AddItem from "./AddItem";
+
 import Receipt from "./Receipt";
 import { firebaseApp } from "../firebase";
 import Navigation from "./Navigation";

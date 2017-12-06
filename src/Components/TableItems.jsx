@@ -3,16 +3,7 @@ import { BootstrapTable, TableHeaderColumn } from "react-bootstrap-table";
 import "../../node_modules/react-bootstrap-table/dist/react-bootstrap-table-all.min.css";
 
 
-class Table extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-            
-    };
-  }
-
-
-
+class TableItems extends Component {
 
   render() {
     return (
@@ -36,4 +27,4 @@ class Table extends Component {
 
 
 
-export default Table;
+export default TableItems;

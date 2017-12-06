@@ -9,13 +9,22 @@ import { update_inventory } from "../actions";
 
 class Receipt extends Component {
 
+		constructor(props){
+		super(props);
+		this.state={
+		type :"receipt"
+	}
+}
+
 
 	addReceipt() {
-		const { reference, date, price, amount } = this.state;
+		const { reference, date, price, amount ,type} = this.state;
 		let { name } = this.state;
 		this.props.dispatch(
-			add_receipt({ reference, date, price, name, amount })
+			add_receipt({ reference, date, price, name, amount , type })
 		);
+
+
 
 		for (let i = 0; i < this.props.items.length; i++) {
 			if (name === this.props.items[i].name) {
@@ -54,6 +63,7 @@ class Receipt extends Component {
 							className="form-control"
 							onChange={event =>
 								this.setState({ name: event.target.value })
+
 							}
 						>
 							<option>Choose</option>
@@ -103,7 +113,7 @@ class Receipt extends Component {
 function mapStateToProps(state) {
 	return {
 		items: state.itemReducer.items,
-		receipts: state.itemReducer.receipts,
+		receipts: state.receiptReducer.receipts,
 		inventory: state.inventoryReducer.inventories
 	};
 }

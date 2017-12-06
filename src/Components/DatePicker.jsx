@@ -26,7 +26,7 @@ class MyDatePicker extends React.Component {
         return <DatePicker
             selected={this.state.startDate}
             onChange={this.handleChange}
-            className="form-control smallMarginBottom"
+            className="form-control smallMarginBottom "
         />;
     }
 }

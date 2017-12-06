@@ -1,9 +1,9 @@
 import React, {Component} from 'react';
 import { connect } from "react-redux";
 
-import Table from './Table';
+import TableItems from './TableItems';
 import Navigation from "./Navigation";
-import AddItem from "./AddItem";
+
 import { add_item } from "../actions";
 
 class Inventory extends Component{
@@ -76,7 +76,7 @@ addItem() {
 
 
 			<div className="pt-4">
-						<Table products={this.props.items} />
+						<TableItems products={this.props.items} />
 				</div>
 
 

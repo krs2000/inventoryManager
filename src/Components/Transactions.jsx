@@ -1,15 +1,9 @@
 import React, {Component} from 'react';
 import Navigation from "./Navigation";
+import TableTransactions from './TableTransactions';
 
 class Transactions extends Component{
 
-	constructor(props){
-		super(props);
-		this.state={
-	
-		
-		}
-	}
 
 
 	render(){
@@ -17,7 +11,7 @@ class Transactions extends Component{
     <div>
    	<Navigation/>
 
-    			<div> Tras s  dscdc</div>
+   <TableTransactions/>
     </div>
 
 			)
