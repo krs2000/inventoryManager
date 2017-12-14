@@ -19,20 +19,19 @@ function onRowSelect(row, isSelected){
 
   for(let prop in row){
     if (prop==="serverKey"){
-    rowKey=row[prop];
+    return rowKey=row[prop];
+    }
   }
-  }
-
 }
 
 
 class TableTransactions extends Component {
 
-    deleteItem(){
-      const user = this.props.user;
-    const userDB = user.split(".").join("")
 
-    firebaseDb.ref(userDB+"/receipts/"+rowKey).remove();
+
+    deleteItem(){
+  
+    firebaseDb.ref(this.props.userDb+"/Receipts/"+rowKey).remove();
   }
 
 
@@ -40,6 +39,12 @@ class TableTransactions extends Component {
     return (
       <div>
       <button
+
+                disabled={
+                  !(
+                   rowKey.length > 0
+                
+                  )}
                 type="button"
                 className="btn btn-warning smallMarginBottom"
                 onClick={() => this.deleteItem()}
@@ -65,7 +70,7 @@ function mapStateToProps(state) {
   return {
     user: state.user.email,
     receipts: state.receiptReducer.receipts,
-    
+      userDb: state.user.userDb
 
   };
 }

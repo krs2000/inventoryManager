@@ -14,30 +14,34 @@ class Ticket extends Component {
 		super(props);
 		this.state = {
 			type: "ticket",
-			date: moment()
+			date: moment(),
+			price: "",
+			name: "",
+			amount: "",
+			reference: ""
 		};
 	}
 
 	addTicket() {
-		console.log(this.state)
+		console.log(this.state);
 		const { reference, price, amount, type } = this.state;
 		let { name, date } = this.state;
 		const user = this.props.user;
-		
+
 		let totalPrice = this.state.price * this.state.amount;
 
-		date = date.format("MMM Do YY")
+		date = date.format("MMM Do YY");
 
-		firebaseDb.ref(this.props.userDb+'/Receipts').push({
-				reference,
-				date,
-				price,
-				name,
-				amount,
-				type,
-				totalPrice,
-				user
-			})
+		firebaseDb.ref(this.props.userDb + "/Receipts").push({
+			reference,
+			date,
+			price,
+			name,
+			amount,
+			type,
+			totalPrice,
+			user
+		});
 
 		for (let i = 0; i < this.props.items.length; i++) {
 			if (name === this.props.items[i].name) {
@@ -46,7 +50,11 @@ class Ticket extends Component {
 					parseInt(this.props.items[i].amount, 10) -
 					parseInt(this.state.amount, 10);
 				firebaseDb
-					.ref(this.props.userDb + "/Items/" + this.props.items[i].serverKey)
+					.ref(
+						this.props.userDb +
+							"/Items/" +
+							this.props.items[i].serverKey
+					)
 					.update({ amount: sum });
 			}
 		}
@@ -99,6 +107,7 @@ class Ticket extends Component {
 							<input
 								placeholder="amount"
 								className="form-control"
+								type="number"
 								onChange={event =>
 									this.setState({
 										amount: event.target.value
@@ -110,6 +119,7 @@ class Ticket extends Component {
 							<input
 								placeholder="price"
 								className="form-control"
+								type="number"
 								onChange={event =>
 									this.setState({ price: event.target.value })
 								}
@@ -117,6 +127,14 @@ class Ticket extends Component {
 						</Col>
 						<Col xs={12} md={2} className="smallMarginBottom">
 							<button
+								disabled={
+									!(
+										this.state.reference.length > 0 &&
+										this.state.price.length > 0 &&
+										this.state.name.length > 0 &&
+										this.state.amount.length > 0
+									)
+								}
 								type="button"
 								className="btn btn-success"
 								onClick={() => this.addTicket()}
@@ -136,7 +154,7 @@ function mapStateToProps(state) {
 		items: state.itemReducer.items,
 		receipts: state.itemReducer.receipts,
 		user: state.user.email,
-		userDb: state.user.userDb,
+		userDb: state.user.userDb
 	};
 }
 export default connect(mapStateToProps, null)(Ticket);

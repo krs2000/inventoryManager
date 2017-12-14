@@ -6,11 +6,10 @@ import { add_receipt } from "../actions";
 import Navigation from "./Navigation";
 import { firebaseDb } from "../firebase";
 
+import DatePicker from "react-datepicker";
+import moment from "moment";
 
-import DatePicker from 'react-datepicker';
-import moment from 'moment';
-
-import 'react-datepicker/dist/react-datepicker.css';
+import "react-datepicker/dist/react-datepicker.css";
 
 class Receipt extends Component {
 	constructor(props) {
@@ -18,17 +17,19 @@ class Receipt extends Component {
 		this.state = {
 			type: "receipt",
 			date: moment(),
-	
+			price: "",
+			name: "",
+			amount: "",
+			reference: ""
 		};
 	}
 
 	addReceipt() {
 		const { reference, price, amount, type } = this.state;
 		const user = this.props.user;
-		
 
 		let { date, name } = this.state;
-		date = date.format("MMM Do YY")
+		date = date.format("MMM Do YY");
 		let totalPrice = this.state.price * this.state.amount;
 		console.log(totalPrice, "totalPrice");
 		this.props.dispatch(
@@ -43,17 +44,17 @@ class Receipt extends Component {
 				user
 			})
 		);
-		
-		firebaseDb.ref(this.props.userDb+'/Receipts').push({
-				reference,
-				date,
-				price,
-				name,
-				amount,
-				type,
-				totalPrice,
-				user
-			})
+
+		firebaseDb.ref(this.props.userDb + "/Receipts").push({
+			reference,
+			date,
+			price,
+			name,
+			amount,
+			type,
+			totalPrice,
+			user
+		});
 
 		for (let i = 0; i < this.props.items.length; i++) {
 			if (name === this.props.items[i].name) {
@@ -62,13 +63,16 @@ class Receipt extends Component {
 					parseInt(this.props.items[i].amount, 10) +
 					parseInt(this.state.amount, 10);
 
-				
-
 				firebaseDb
-					.ref(this.props.userDb+"/Items/" + this.props.items[i].serverKey)
+					.ref(
+						this.props.userDb +
+							"/Items/" +
+							this.props.items[i].serverKey
+					)
 					.update({ amount: sum });
 			}
 		}
+		console.log(this.state);
 	}
 
 	render() {
@@ -89,13 +93,14 @@ class Receipt extends Component {
 							/>
 
 							<DatePicker
-           				 selected={this.state.date}
-           				 onChange={event =>
+								selected={this.state.date}
+								onChange={event =>
 									this.setState({
 										date: event.target.value
-									})}
-           				 className="form-control smallMarginBottom "
-      					  />
+									})
+								}
+								className="form-control smallMarginBottom "
+							/>
 						</Col>
 						<Col xs={12} md={2} className="smallMarginBottom">
 							<select
@@ -118,6 +123,7 @@ class Receipt extends Component {
 							<input
 								placeholder="amount"
 								className="form-control"
+								type="number"
 								onChange={event =>
 									this.setState({
 										amount: event.target.value
@@ -129,6 +135,7 @@ class Receipt extends Component {
 							<input
 								placeholder="price"
 								className="form-control"
+								type="number"
 								onChange={event =>
 									this.setState({ price: event.target.value })
 								}
@@ -136,6 +143,14 @@ class Receipt extends Component {
 						</Col>
 						<Col xs={12} md={2} className="smallMarginBottom">
 							<button
+								disabled={
+									!(
+										this.state.reference.length > 0 &&
+										this.state.price.length > 0 &&
+										this.state.name.length > 0 &&
+										this.state.amount.length > 0
+									)
+								}
 								type="button"
 								className="btn btn-info"
 								onClick={() => this.addReceipt()}
@@ -155,8 +170,7 @@ function mapStateToProps(state) {
 		items: state.itemReducer.items,
 		receipts: state.receiptReducer.receipts,
 		user: state.user.email,
-		userDb: state.user.userDb,
-
+		userDb: state.user.userDb
 	};
 }
 export default connect(mapStateToProps, null)(Receipt);

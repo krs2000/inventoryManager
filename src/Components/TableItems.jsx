@@ -29,9 +29,8 @@ function onRowSelect(row, isSelected){
 class TableItems extends Component {
 
   deleteItem(){
-     const user = this.props.user;
-    const userDB = user.split(".").join("")
-    firebaseDb.ref(userDB+"/Items/"+rowKey).remove();
+ 
+    firebaseDb.ref(this.props.userDb+"/Items/"+rowKey).remove();
   }
 
   render() {
@@ -45,10 +44,7 @@ class TableItems extends Component {
                 Delete Item
               </button>
         <BootstrapTable data={this.props.products} selectRow={selectRowProp} className="bgWhite" >
-          <TableHeaderColumn dataField="itemId" isKey>
-            Product ID
-          </TableHeaderColumn>
-          <TableHeaderColumn dataField="name">Product Name</TableHeaderColumn>
+          <TableHeaderColumn dataField="name" isKey>Product Name</TableHeaderColumn>
           <TableHeaderColumn dataField="description">
             Description
           </TableHeaderColumn>
@@ -63,7 +59,7 @@ class TableItems extends Component {
 function mapStateToProps(state) {
   return {
     user: state.user.email,
- 
+     userDb: state.user.userDb
     
 
   };

@@ -5,29 +5,35 @@ import TableItems from "./TableItems";
 import Navigation from "./Navigation";
 import SimpleBarChart from "./chart";
 import { add_item } from "../actions";
-import {store} from "../index"
+import { store } from "../index";
 import { firebaseDb } from "../firebase";
 class Inventory extends Component {
 	constructor(props) {
 		super(props);
 		this.state = {
 			active: false,
-			amount: 0,		
+			amount: 0,
+			name: "",
+			description: "",
+			category: "",
+			uniqueName: true
 		};
 
 		this.handleClick = this.handleClick.bind(this);
-
-	
 	}
 
 	addItem() {
-		console.log("this state", this.state);
-		const { name, description, category, amount} = this.state;
-		const itemId = Math.random();	
+	
+		const { name, description, category, amount } = this.state;
+		const itemId = Math.random();
 		const user = this.props.user;
-	
-		firebaseDb.ref(this.props.userDb+"/Items").push({ itemId, name, description, category, amount,user });
-	
+		this.setState({
+			uniqueName:false
+		})
+
+		firebaseDb
+			.ref(this.props.userDb + "/Items")
+			.push({ itemId, name, description, category, amount, user });
 	}
 
 	handleClick() {
@@ -36,39 +42,41 @@ class Inventory extends Component {
 		});
 	}
 
-	componentDidMount() {
-		
-			firebaseDb.ref(this.props.userDb+"/Items").on("value", snap => {
-				let items = [];
-				snap.forEach(item => {
-					const {
-						amount,
-						category,
-						description,
-						itemId,
-						name,
-						user
-					
-					} = item.val();
-					const serverKey = item.key;
-					items.push({
-						amount,
-						category,
-						description,
-						itemId,
-						name,
-						serverKey,
-						user
-				
-					});
-				});	
-							
-				this.props.dispatch(add_item(items));	
-			
-
-			});	
+	validate(email, password) {
+		// true means invalid, so our conditions got reversed
+		return {
+			email: email.length === 0,
+			password: password.length === 0
+		};
 	}
 
+	componentDidMount() {
+		firebaseDb.ref(this.props.userDb + "/Items").on("value", snap => {
+			let items = [];
+			snap.forEach(item => {
+				const {
+					amount,
+					category,
+					description,
+					itemId,
+					name,
+					user
+				} = item.val();
+				const serverKey = item.key;
+				items.push({
+					amount,
+					category,
+					description,
+					itemId,
+					name,
+					serverKey,
+					user
+				});
+			});
+
+			this.props.dispatch(add_item(items));
+		});
+	}
 
 	render() {
 		return (
@@ -88,19 +96,46 @@ class Inventory extends Component {
 							<div className="form-group">
 								<input
 									className="form-control"
-									placeholder="Item Name" 
+									placeholder="Item Name"
 									required
-									onChange={event =>
-										this.setState({
-											name: event.target.value
-										})
-									}
-
+									onChange={event => {
+										if (this.props.items.length === 0) {
+											this.setState({
+												name: event.target.value
+											});
+										} else {
+											for (
+												let i = 0;
+												i < this.props.items.length;
+												i++
+											) {
+												console.log("check");
+												if (
+													event.target.value ===
+													this.props.items[i].name
+												) {
+													console.log("checkx");
+													this.setState({
+														uniqueName: false
+													});
+													break;
+												} else {
+													this.setState({
+														name:
+															event.target.value,
+														uniqueName: true
+													});
+												}
+												console.log(this.state);
+											}
+										}
+									}}
 								/>
+
 								<input
 									className="form-control"
 									placeholder="description"
-									required 
+									required
 									onChange={event =>
 										this.setState({
 											description: event.target.value
@@ -117,39 +152,44 @@ class Inventory extends Component {
 										})
 									}
 								/>
-							</div>
+							</div>								
 							<button
+								disabled={
+									!(
+										this.state.name.length > 0 &&
+										this.state.description.length > 0 &&
+										this.state.category.length > 0 &&
+										this.state.uniqueName
+									)
+								}
 								type="button"
 								className="btn btn-success"
 								onClick={() => this.addItem()}
 							>
 								Confirm
 							</button>
+							{!this.state.uniqueName && <div>This item is already added</div>}
 						</div>
 					)}
 				</div>
 				<hr />
 				<div className="smallMarginBottom center">
-				  <SimpleBarChart products={this.props.items} />
+					<SimpleBarChart products={this.props.items} />
 				</div>
 				<div className="pt-4">
-				
 					<TableItems products={this.props.items} />
-			
 				</div>
 			</div>
 		);
 	}
 }
 
-
-
 function mapStateToProps(state) {
 	return {
 		items: state.itemReducer.items,
 		receipts: state.receiptReducer.receipts,
 		user: state.user.email,
-		userDb: state.user.userDb,
+		userDb: state.user.userDb
 	};
 }
 export default connect(mapStateToProps, null)(Inventory);
