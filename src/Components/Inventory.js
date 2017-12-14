@@ -37,9 +37,7 @@ class Inventory extends Component {
 	}
 
 	componentDidMount() {
-			console.log(this.props.user)
-			const user = this.props.user;
-			
+		
 			firebaseDb.ref(this.props.userDb+"/Items").on("value", snap => {
 				let items = [];
 				snap.forEach(item => {
@@ -64,9 +62,9 @@ class Inventory extends Component {
 				
 					});
 				});	
-				console.log(items, "itemz")					
+							
 				this.props.dispatch(add_item(items));	
-				console.log(this.props, "propppppps")
+			
 
 			});	
 	}
@@ -131,10 +129,13 @@ class Inventory extends Component {
 					)}
 				</div>
 				<hr />
+				<div className="smallMarginBottom center">
 				  <SimpleBarChart products={this.props.items} />
-				
+				</div>
 				<div className="pt-4">
+				
 					<TableItems products={this.props.items} />
+			
 				</div>
 			</div>
 		);

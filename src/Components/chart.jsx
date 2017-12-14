@@ -21,7 +21,7 @@ class SimpleBarChart extends Component {
 	render () {
   	return (
     	<BarChart width={600} height={300} data={this.props.items}
-            margin={{top: 5, right: 30, left: 20, bottom: 5}}>
+            margin={{top: 5, right: 30, left: 20, bottom: 5}} className="bgWhite">
        <XAxis dataKey="name"/>
        <YAxis/>
        <CartesianGrid strokeDasharray="3 3"/>

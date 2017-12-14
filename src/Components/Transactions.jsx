@@ -5,7 +5,7 @@ import TableTransactions from './TableTransactions';
 import { firebaseDb } from "../firebase";
 import { connect } from "react-redux";
 import { add_receipt } from "../actions";
-
+import { add_item } from "../actions";
 
 class Transactions extends Component{
 

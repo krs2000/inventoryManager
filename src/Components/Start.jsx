@@ -3,7 +3,7 @@ import React, { Component } from "react";
 import { Col, Grid} from "react-bootstrap";
 import { connect } from "react-redux";
 
-import { add_receipt } from "../actions";
+import { add_item } from "../actions";
 import Navigation from "./Navigation";
 
 
@@ -20,7 +20,42 @@ class Ticket extends Component {
 	
 
 
-	render() {
+
+
+	componentDidMount() {
+		
+			firebaseDb.ref(this.props.userDb+"/Items").on("value", snap => {
+				let items = [];
+				snap.forEach(item => {
+					const {
+						amount,
+						category,
+						description,
+						itemId,
+						name,
+						user
+					
+					} = item.val();
+					const serverKey = item.key;
+					items.push({
+						amount,
+						category,
+						description,
+						itemId,
+						name,
+						serverKey,
+						user
+				
+					});
+				});	
+							
+				this.props.dispatch(add_item(items));	
+			
+
+			});	
+	}
+
+			render() {
 		return (
 			<div>
 				<Navigation />
@@ -35,6 +70,7 @@ function mapStateToProps(state) {
 		items: state.itemReducer.items,
 		receipts: state.itemReducer.receipts,
 		user: state.user.email,
+		userDb: state.user.userDb,
 	};
 }
 export default connect(mapStateToProps, null)(Ticket);

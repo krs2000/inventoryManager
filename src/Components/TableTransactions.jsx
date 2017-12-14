@@ -46,7 +46,7 @@ class TableTransactions extends Component {
               >
                 Delete Transaction
               </button>
-        <BootstrapTable data={this.props.receipts} selectRow={selectRowProp}>       
+        <BootstrapTable data={this.props.receipts} selectRow={selectRowProp} className="bgWhite " >       
           <TableHeaderColumn dataField="type">Type</TableHeaderColumn>
           <TableHeaderColumn dataField="name">
             Product Name

@@ -36,7 +36,7 @@ class TableItems extends Component {
 
   render() {
     return (
-      <div>
+      <div >
       <button
                 type="button"
                 className="btn btn-warning smallMarginBottom"
@@ -44,7 +44,7 @@ class TableItems extends Component {
               >
                 Delete Item
               </button>
-        <BootstrapTable data={this.props.products} selectRow={selectRowProp} >
+        <BootstrapTable data={this.props.products} selectRow={selectRowProp} className="bgWhite" >
           <TableHeaderColumn dataField="itemId" isKey>
             Product ID
           </TableHeaderColumn>

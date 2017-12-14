@@ -45,3 +45,16 @@ body {
     background-repeat:no-repeat;
    background-size:cover;
 }
+
+
+.bgWhite{
+	 background: white;
+	  opacity: 0.9;
+}
+
+.center{
+
+	  display: flex;
+	  justify-content:center;
+
+}
