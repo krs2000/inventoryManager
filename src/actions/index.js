@@ -1,25 +1,17 @@
-import {ADD_ITEM, SIGNED_IN, ADD_RECEIPT , INVENTORY} from "../constants"
+import {ADD_ITEM, SIGNED_IN, ADD_RECEIPT } from "../constants"
 
 export const add_item = (item) => {
 
 const action={
-	type:ADD_ITEM,
+	type: ADD_ITEM,
 	item
 }
+
+console.log("action add.item",action)
 return action;
 }
 
 
-export const update_inventory = (inventory) => {
-
-const action={
-	type:INVENTORY,
-	inventory
-}
-
-return action;
-
-}
 
 
 export function logUser(email){

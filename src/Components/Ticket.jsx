@@ -1,11 +1,13 @@
 import React, { Component } from "react";
-import MyDatePicker from "./DatePicker";
-import { FormGroup, ControlLabel, FormControl ,Col, Grid} from "react-bootstrap";
+// import MyDatePicker from "./DatePicker";
+import { Col, Grid} from "react-bootstrap";
 import { connect } from "react-redux";
 
 import { add_receipt } from "../actions";
 import Navigation from "./Navigation";
-import { update_inventory } from "../actions";
+
+
+import { firebaseDb } from "../firebase";
 
 class Ticket extends Component {
 		constructor(props){
@@ -18,8 +20,11 @@ class Ticket extends Component {
 	addTicket() {
 		const { reference, date, price, amount , type } = this.state;
 		let { name } = this.state;
+		const user = this.props.user;
+		const userDB = user.split(".").join("")
+
 		this.props.dispatch(
-			add_receipt({ reference, date, price, name, amount ,type})
+			add_receipt({ reference, date, price, name, amount ,type,user})
 		);
 
 		for (let i = 0; i < this.props.items.length; i++) {
@@ -28,7 +33,9 @@ class Ticket extends Component {
 				sum =
 					parseInt(this.props.items[i].amount, 10) -
 					parseInt(this.state.amount, 10);
-				this.props.items[i].amount = sum;
+				firebaseDb
+					.ref(userDB+'/receipts/' + this.props.items[i].serverKey)
+					.update({ amount: sum });
 			}
 		}
 	}
@@ -52,7 +59,7 @@ class Ticket extends Component {
 						}
 					/>
 
-					<MyDatePicker />
+				
 					</Col>
 					<Col xs={12} md={2} className="smallMarginBottom">
 						<select
@@ -109,7 +116,7 @@ function mapStateToProps(state) {
 	return {
 		items: state.itemReducer.items,
 		receipts: state.itemReducer.receipts,
-		inventory: state.inventoryReducer.inventories
+		user: state.user.email,
 	};
 }
 export default connect(mapStateToProps, null)(Ticket);

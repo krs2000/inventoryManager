@@ -1,6 +1,7 @@
 import React, {Component} from 'react';
 import {firebaseApp} from '../firebase';
 import{Link} from "react-router";
+import logo from '../img/logoBlack.png' 
 
 class SignIn extends Component{
 
@@ -29,6 +30,9 @@ class SignIn extends Component{
 
 	render(){
 		return(
+			<div>
+			<div className="containerSign"><img src={logo} alt="logo" className="logo"/></div>
+			<div className="containerSign">
 			<div className="form-inline">
 			<h2>Sign In</h2>
 			<div className = "form-group">
@@ -53,7 +57,8 @@ class SignIn extends Component{
 			<div>{this.state.error.message}</div>
 			<div><Link to={"/signup"}>Sign up instead</Link></div>
 			</div>
-
+			</div>
+			</div>
 			)
 	}
 

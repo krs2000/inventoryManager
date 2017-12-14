@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 import {firebaseApp} from '../firebase';
 import{Link} from "react-router";
-
+import logo from '../img/logoBlack.png' 
 class SignUp extends Component{
 
 	constructor(props){
@@ -29,6 +29,9 @@ class SignUp extends Component{
 
 	render(){
 		return(
+			<div>
+			<div className="containerSign"><img src={logo} alt="logo" className="logo"/></div>
+			<div className="containerSign">			
 			<div className="form-inline">
 			<h2>Sign Up</h2>
 			<div className = "form-group">
@@ -53,7 +56,8 @@ class SignUp extends Component{
 			<div>{this.state.error.message}</div>
 			<div><Link to={"/signin"}>Already a user? Sign in instead</Link></div>
 			</div>
-
+			</div>
+			</div>
 			)
 	}
 

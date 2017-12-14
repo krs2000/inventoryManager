@@ -17,6 +17,6 @@
 
 //   export const goalRef = firebase.database().ref('goals');
     
-
-
-export const itemsRef = firebase.database().ref("items");
+  export const receiptsRef = firebase.database().ref('receipts');
+  export const itemsRef = firebase.database().ref("items");
+	export const firebaseDb = firebase.database()

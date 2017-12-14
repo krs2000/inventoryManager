@@ -1,7 +1,9 @@
 import React, { Component } from "react";
-import { Navbar, Nav, NavItem, NavDropdown, MenuItem } from "react-bootstrap";
+import { Navbar, Nav, NavItem} from "react-bootstrap";
 import { firebaseApp } from "../firebase";
 import { browserHistory } from "react-router";
+import logo from '../img/logo.png' 
+import { connect } from "react-redux";
 
 class Navigation extends Component {
 	signOut() {
@@ -13,11 +15,13 @@ class Navigation extends Component {
 			<div>
 				<Navbar inverse collapseOnSelect>
 					<Navbar.Header>
-						<Navbar.Brand>IM lite</Navbar.Brand>
+				
+						<Navbar.Brand><img src={logo} alt="logo" className="logo"/></Navbar.Brand>
+					
 						<Navbar.Toggle />
 					</Navbar.Header>
 					<Navbar.Collapse>
-						<Nav>
+						<Nav className="paddingTop25">
 							<NavItem>
 								<span
 									onClick={() =>
@@ -58,25 +62,13 @@ class Navigation extends Component {
 									Transactions
 								</span>
 							</NavItem>
-							<NavDropdown
-								eventKey={3}
-								title="Dropdown"
-								id="basic-nav-dropdown"
-							>
-								<MenuItem eventKey={3.1}>Action</MenuItem>
-								<MenuItem eventKey={3.2}>
-									Another action
-								</MenuItem>
-								<MenuItem eventKey={3.3}>
-									Something else here
-								</MenuItem>
-								<MenuItem divider />
-								<MenuItem eventKey={3.3}>
-									Separated link
-								</MenuItem>
-							</NavDropdown>
+							
 						</Nav>
-						<Nav pullRight>
+
+						<Nav pullRight >
+						<div className="logged">
+						Welcome {this.props.user}
+						</div>
 							<NavItem eventKey={2}>
 								<button
 									className="btn btn-danger"
@@ -93,4 +85,11 @@ class Navigation extends Component {
 	}
 }
 
-export default Navigation;
+function mapStateToProps(state) {
+	return {
+	
+		user: state.user.email,
+	};
+}
+
+export default connect(mapStateToProps, null)(Navigation);

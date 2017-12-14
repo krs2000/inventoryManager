@@ -15,5 +15,27 @@ a:active {color: #69c;}
 
 
 .smallMarginBottom{
-	margin-bottom: 10px
+	margin-bottom: 20px
+}
+
+.logo{
+	width:150px;
+	height:100px;
+}
+
+.paddingTop25{
+	padding-top:25px;
+}
+
+
+.containerSign{
+	  display: flex;
+	  justify-content:center;
+
+}
+
+.logged{
+	padding-top:10px;
+	color:white;
+	font-size: 12px;
 }
