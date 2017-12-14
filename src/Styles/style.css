@@ -39,3 +39,9 @@ a:active {color: #69c;}
 	color:white;
 	font-size: 12px;
 }
+
+body {
+  background: url(../img/bg.jpg);
+    background-repeat:no-repeat;
+   background-size:cover;
+}

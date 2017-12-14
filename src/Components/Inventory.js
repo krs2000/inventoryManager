@@ -17,7 +17,7 @@ class Inventory extends Component {
 
 		this.handleClick = this.handleClick.bind(this);
 
-		// this.componentDidMount = this.componentDidMount.bind(this);
+	
 	}
 
 	addItem() {
@@ -25,10 +25,8 @@ class Inventory extends Component {
 		const { name, description, category, amount} = this.state;
 		const itemId = Math.random();	
 		const user = this.props.user;
-		const userDB = user.split(".").join("")
-		console.log(this.state)
-		// this.props.dispatch(add_item({itemId, name, description, category, amount,user}));
-		firebaseDb.ref(userDB+"/Items").push({ itemId, name, description, category, amount,user });
+	
+		firebaseDb.ref(this.props.userDb+"/Items").push({ itemId, name, description, category, amount,user });
 	
 	}
 
@@ -41,8 +39,8 @@ class Inventory extends Component {
 	componentDidMount() {
 			console.log(this.props.user)
 			const user = this.props.user;
-			const userDB = user.split(".").join("")
-			firebaseDb.ref(userDB+"/Items").on("value", snap => {
+			
+			firebaseDb.ref(this.props.userDb+"/Items").on("value", snap => {
 				let items = [];
 				snap.forEach(item => {
 					const {
@@ -150,6 +148,7 @@ function mapStateToProps(state) {
 		items: state.itemReducer.items,
 		receipts: state.receiptReducer.receipts,
 		user: state.user.email,
+		userDb: state.user.userDb,
 	};
 }
 export default connect(mapStateToProps, null)(Inventory);

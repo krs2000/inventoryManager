@@ -25,7 +25,7 @@ class Receipt extends Component {
 	addReceipt() {
 		const { reference, price, amount, type } = this.state;
 		const user = this.props.user;
-		const userDB = user.split(".").join("")
+		
 
 		let { date, name } = this.state;
 		date = date.format("MMM Do YY")
@@ -44,7 +44,7 @@ class Receipt extends Component {
 			})
 		);
 		
-		firebaseDb.ref(userDB+'/receipts').push({
+		firebaseDb.ref(this.props.userDb+'/Receipts').push({
 				reference,
 				date,
 				price,
@@ -65,7 +65,7 @@ class Receipt extends Component {
 				
 
 				firebaseDb
-					.ref(userDB+"/Items/" + this.props.items[i].serverKey)
+					.ref(this.props.userDb+"/Items/" + this.props.items[i].serverKey)
 					.update({ amount: sum });
 			}
 		}
@@ -155,6 +155,7 @@ function mapStateToProps(state) {
 		items: state.itemReducer.items,
 		receipts: state.receiptReducer.receipts,
 		user: state.user.email,
+		userDb: state.user.userDb,
 
 	};
 }

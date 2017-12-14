@@ -51,7 +51,7 @@ ReactDOM.render(
 <Route path="/Inventory" component = {Inventory}/>
 <Route path="/Receipt" component = {Receipt}/>
 <Route path="/Ticket" component = {Ticket}/>
-<Route path="/home" component = {Inventory}/>
+<Route path="/Transactions" component = {Transactions}/>
 </Router>
 </Provider>
 , document.getElementById('root')

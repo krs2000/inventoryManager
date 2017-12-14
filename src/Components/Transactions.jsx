@@ -13,9 +13,9 @@ class Transactions extends Component{
 
 	componentDidMount() {
 			const user = this.props.user;
-			const userDB = user.split(".").join("")
+		
 
-			firebaseDb.ref(userDB+'/receipts').on("value", snap => {
+			firebaseDb.ref(this.props.userDb+'/Receipts').on("value", snap => {
 				let receipts = [];
 				snap.forEach(receipt => {
 					const {
@@ -61,7 +61,8 @@ function mapStateToProps(state) {
 	console.log("state,", state);
 	return {
 		receipts: state.receiptReducer.receipts,
-		 user: state.user.email
+		 user: state.user.email,
+		 userDb: state.user.userDb,
 
 	};
 }

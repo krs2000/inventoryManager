@@ -8,8 +8,10 @@ export default (state = user, action) => {
 	switch (action.type) {
 		case SIGNED_IN:
 			const {email} = action;
+			const {userDb} = email.split(".").join("");
 			user = {
-				email
+				email,
+				userDb
 			}
 			return user;
 		default:
