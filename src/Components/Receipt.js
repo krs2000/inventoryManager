@@ -1,14 +1,11 @@
 import React, { Component } from "react";
 import { Col, Grid } from "react-bootstrap";
 import { connect } from "react-redux";
-
 import { add_receipt } from "../actions";
 import Navigation from "./Navigation";
 import { firebaseDb } from "../firebase";
-
 import DatePicker from "react-datepicker";
 import moment from "moment";
-
 import "react-datepicker/dist/react-datepicker.css";
 
 class Receipt extends Component {
@@ -16,22 +13,24 @@ class Receipt extends Component {
 		super(props);
 		this.state = {
 			type: "receipt",
-			date: moment(),
+			date:  moment(),
 			price: "",
 			name: "",
 			amount: "",
-			reference: ""
+			reference: "",
+			uniqueName: true
 		};
 	}
 
 	addReceipt() {
+		this.setState({
+			uniqueName:false
+		})
 		const { reference, price, amount, type } = this.state;
 		const user = this.props.user;
-
 		let { date, name } = this.state;
 		date = date.format("MMM Do YY");
 		let totalPrice = this.state.price * this.state.amount;
-		console.log(totalPrice, "totalPrice");
 		this.props.dispatch(
 			add_receipt({
 				reference,
@@ -72,7 +71,13 @@ class Receipt extends Component {
 					.update({ amount: sum });
 			}
 		}
-		console.log(this.state);
+
+let element = document.getElementById("addReceipt")
+element.classList.remove("bounce")
+void element.offsetWidth;
+element.classList.add("bounce");
+;
+
 	}
 
 	render() {
@@ -85,18 +90,42 @@ class Receipt extends Component {
 							<input
 								placeholder="Receipt Reference"
 								className="form-control smallMarginBottom"
-								onChange={event =>
-									this.setState({
-										reference: event.target.value
-									})
-								}
+										onChange={event => {
+										if (this.props.receipts.length === 0) {
+											this.setState({
+												reference: event.target.value
+											});
+										} else {
+											for (
+												let i = 0;
+												i < this.props.items.length;
+												i++
+											) {			
+												if (
+													event.target.value ===
+													this.props.items[i].name
+												) {
+													this.setState({
+														uniqueName: false
+													});
+													break;
+												} else {
+													this.setState({
+														reference:
+															event.target.value,
+														uniqueName: true
+													});
+												}
+											}
+										}
+									}}
 							/>
 
 							<DatePicker
 								selected={this.state.date}
-								onChange={event =>
+								onChange={date =>
 									this.setState({
-										date: event.target.value
+										date
 									})
 								}
 								className="form-control smallMarginBottom "
@@ -148,15 +177,18 @@ class Receipt extends Component {
 										this.state.reference.length > 0 &&
 										this.state.price.length > 0 &&
 										this.state.name.length > 0 &&
-										this.state.amount.length > 0
+										this.state.amount.length > 0 &&
+										this.state.uniqueName
 									)
 								}
 								type="button"
-								className="btn btn-info"
+								id="addReceipt"
+								className="btn btn-info "
 								onClick={() => this.addReceipt()}
 							>
 								Add Receipt
 							</button>
+							{!this.state.uniqueName && <div>This reference is already added</div>}
 						</Col>
 					</form>
 				</Grid>

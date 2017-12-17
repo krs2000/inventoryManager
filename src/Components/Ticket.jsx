@@ -1,5 +1,4 @@
 import React, { Component } from "react";
-// import MyDatePicker from "./DatePicker";
 import { Col, Grid } from "react-bootstrap";
 import { connect } from "react-redux";
 import DatePicker from "react-datepicker";
@@ -18,12 +17,15 @@ class Ticket extends Component {
 			price: "",
 			name: "",
 			amount: "",
-			reference: ""
+			reference: "",
+			uniqueName: true
 		};
 	}
 
 	addTicket() {
-		console.log(this.state);
+			this.setState({
+			uniqueName:false
+		})
 		const { reference, price, amount, type } = this.state;
 		let { name, date } = this.state;
 		const user = this.props.user;
@@ -31,6 +33,19 @@ class Ticket extends Component {
 		let totalPrice = this.state.price * this.state.amount;
 
 		date = date.format("MMM Do YY");
+
+		this.props.dispatch(
+			add_receipt({
+				reference,
+				date,
+				price,
+				name,
+				amount,
+				type,
+				totalPrice,
+				user
+			})
+		);
 
 		firebaseDb.ref(this.props.userDb + "/Receipts").push({
 			reference,
@@ -58,6 +73,11 @@ class Ticket extends Component {
 					.update({ amount: sum });
 			}
 		}
+
+let element = document.getElementById("addTicket")
+element.classList.remove("bounce")
+void element.offsetWidth;
+element.classList.add("bounce");
 	}
 
 	render() {
@@ -70,17 +90,41 @@ class Ticket extends Component {
 							<input
 								placeholder="Receipt Reference"
 								className="form-control smallMarginBottom"
-								onChange={event =>
-									this.setState({
-										reference: event.target.value
-									})
-								}
+									onChange= {event => {
+										if (this.props.receipts.length === 0) {
+											this.setState({
+												reference: event.target.value
+											});
+										} else {
+											for (
+												let i = 0;
+												i < this.props.items.length;
+												i++
+											) {			
+												if (
+													event.target.value ===
+													this.props.items[i].name
+												) {
+													this.setState({
+														uniqueName: false
+													});
+													break;
+												} else {
+													this.setState({
+														reference:
+															event.target.value,
+														uniqueName: true
+													});
+												}
+											}
+										}
+									}}
 							/>
 							<DatePicker
 								selected={this.state.date}
-								onChange={event =>
+								onChange={date =>
 									this.setState({
-										date: event.target.value
+										date
 									})
 								}
 								className="form-control smallMarginBottom "
@@ -132,15 +176,18 @@ class Ticket extends Component {
 										this.state.reference.length > 0 &&
 										this.state.price.length > 0 &&
 										this.state.name.length > 0 &&
-										this.state.amount.length > 0
+										this.state.amount.length > 0 &&
+										this.state.uniqueName
 									)
 								}
 								type="button"
 								className="btn btn-success"
+								id= "addTicket"
 								onClick={() => this.addTicket()}
 							>
 								Add Ticket
 							</button>
+								{!this.state.uniqueName && <div>This reference is already added</div>}
 						</Col>
 					</form>
 				</Grid>
@@ -152,9 +199,10 @@ class Ticket extends Component {
 function mapStateToProps(state) {
 	return {
 		items: state.itemReducer.items,
-		receipts: state.itemReducer.receipts,
 		user: state.user.email,
-		userDb: state.user.userDb
+		userDb: state.user.userDb,
+	    receipts: state.receiptReducer.receipts,
+
 	};
 }
 export default connect(mapStateToProps, null)(Ticket);

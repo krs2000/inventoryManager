@@ -1,10 +1,10 @@
 import React, { Component } from "react";
 import { BootstrapTable, TableHeaderColumn } from "react-bootstrap-table";
 import "../../node_modules/react-bootstrap-table/dist/react-bootstrap-table-all.min.css";
-import { firebaseDb } from "../firebase";
 import { connect } from "react-redux";
+import { firebaseDb } from "../firebase";
 
-  let rowKey = "";
+let rowKey = "";
 
 const selectRowProp = {
   mode: 'radio',
@@ -13,25 +13,18 @@ const selectRowProp = {
 };
 
 function onRowSelect(row, isSelected){
-
   for(let prop in row){
     if (prop==="serverKey"){
     rowKey=row[prop];
   }
   }
-
 }
 
-
-
-
-
 class TableItems extends Component {
-
   deleteItem(){
- 
     firebaseDb.ref(this.props.userDb+"/Items/"+rowKey).remove();
   }
+
 
   render() {
     return (
@@ -50,7 +43,7 @@ class TableItems extends Component {
           </TableHeaderColumn>
           <TableHeaderColumn dataField="category">Category</TableHeaderColumn>
           <TableHeaderColumn dataField="amount">Amount</TableHeaderColumn>
-        </BootstrapTable>
+              </BootstrapTable>
       </div>
     );
   }

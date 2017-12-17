@@ -4,22 +4,11 @@ import { connect } from "react-redux";
 
 
 
- 
-class SimpleBarChart extends Component {
-
-	constructor(props){
-		super(props);
-		this.state={
-		data:[]
-		}
-	}
-
-	componentWillReceiveProps(){
-		this.setState({data:this.props.products})
-	}
+ class SimpleBarChart extends Component {
 
 	render () {
   	return (
+      <div className="chart">
     	<BarChart width={600} height={300} data={this.props.items}
             margin={{top: 5, right: 30, left: 20, bottom: 5}} className="bgWhite">
        <XAxis dataKey="name"/>
@@ -29,6 +18,7 @@ class SimpleBarChart extends Component {
        <Legend />
        <Bar dataKey="amount" fill="#82ca9d" />
       </BarChart>
+      </div>
     );
   }
 }

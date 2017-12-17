@@ -1,8 +1,8 @@
 import React, { Component } from "react";
-import { Navbar, Nav, NavItem} from "react-bootstrap";
+import { Navbar, Nav, NavItem ,NavDropdown,MenuItem} from "react-bootstrap";
 import { firebaseApp } from "../firebase";
 import { browserHistory } from "react-router";
-import logo from '../img/logo.png' 
+import logo from "../img/logo.png";
 import { connect } from "react-redux";
 
 class Navigation extends Component {
@@ -15,9 +15,10 @@ class Navigation extends Component {
 			<div>
 				<Navbar inverse collapseOnSelect>
 					<Navbar.Header>
-				
-						<Navbar.Brand><img src={logo} alt="logo" className="logo"/></Navbar.Brand>
-					
+						<Navbar.Brand>
+							<img src={logo} alt="logo" className="logo" />
+						</Navbar.Brand>
+
 						<Navbar.Toggle />
 					</Navbar.Header>
 					<Navbar.Collapse>
@@ -32,7 +33,7 @@ class Navigation extends Component {
 									Inventory
 								</span>
 							</NavItem>
-							<NavItem eventKey={2}>
+							<NavItem>
 								<span
 									onClick={() =>
 										browserHistory.push("/Receipt")
@@ -42,7 +43,7 @@ class Navigation extends Component {
 									Receipt
 								</span>
 							</NavItem>
-							<NavItem eventKey={2}>
+							<NavItem>
 								<span
 									onClick={() =>
 										browserHistory.push("/Ticket")
@@ -52,7 +53,7 @@ class Navigation extends Component {
 									Ticket
 								</span>
 							</NavItem>
-							<NavItem eventKey={2}>
+							<NavItem>
 								<span
 									onClick={() =>
 										browserHistory.push("/Transactions")
@@ -62,21 +63,26 @@ class Navigation extends Component {
 									Transactions
 								</span>
 							</NavItem>
-							
 						</Nav>
 
-						<Nav pullRight >
-						<div className="logged">
-						Welcome {this.props.user}
-						</div>
-							<NavItem eventKey={2}>
-								<button
-									className="btn btn-danger"
-									onClick={() => this.signOut()}
-								>
+						<Nav pullRight 	className="paddingTop25">
+							<NavDropdown
+								title="Account"
+								id="basic-nav-dropdown"
+							
+							>
+								<MenuItem
+								onClick={() =>
+										browserHistory.push("/Options")
+									}>Options</MenuItem>
+								
+								<MenuItem divider/>
+								<MenuItem 
+								onClick={() => this.signOut()}>
 									Sign Out
-								</button>
-							</NavItem>
+								</MenuItem>
+								
+							</NavDropdown>
 						</Nav>
 					</Navbar.Collapse>
 				</Navbar>
@@ -87,8 +93,7 @@ class Navigation extends Component {
 
 function mapStateToProps(state) {
 	return {
-	
-		user: state.user.email,
+		user: state.user.email
 	};
 }
 

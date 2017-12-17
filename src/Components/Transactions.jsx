@@ -1,20 +1,16 @@
 import React, {Component} from 'react';
 import Navigation from "./Navigation";
 import TableTransactions from './TableTransactions';
-
 import { firebaseDb } from "../firebase";
 import { connect } from "react-redux";
 import { add_receipt } from "../actions";
-import { add_item } from "../actions";
+
 
 class Transactions extends Component{
 
-	
-
 	componentDidMount() {
-			const user = this.props.user;
 		
-
+	
 			firebaseDb.ref(this.props.userDb+'/Receipts').on("value", snap => {
 				let receipts = [];
 				snap.forEach(receipt => {
@@ -58,11 +54,9 @@ class Transactions extends Component{
 }
 
 function mapStateToProps(state) {
-	console.log("state,", state);
 	return {
 		receipts: state.receiptReducer.receipts,
-		 user: state.user.email,
-		 userDb: state.user.userDb,
+		userDb: state.user.userDb,
 
 	};
 }

@@ -1,7 +1,8 @@
 import React, {Component} from 'react';
 import {firebaseApp} from '../firebase';
-import{Link} from "react-router";
 import logo from '../img/logoBlack.png' 
+import { browserHistory } from "react-router";
+
 class SignUp extends Component{
 
 	constructor(props){
@@ -18,11 +19,9 @@ class SignUp extends Component{
 
 
 	signUp(){
-		console.log("this state",this.state);
 		const {email,password}=this.state;
 		firebaseApp.auth().createUserWithEmailAndPassword(email,password)
 		.catch(error=>{
-			console.log('error',error);
 			this.setState({error})
 		})
 	}
@@ -33,7 +32,6 @@ class SignUp extends Component{
 			<div className="containerSign"><img src={logo} alt="logo" className="logo"/></div>
 			<div className="containerSign">			
 			<div className="form-inline">
-			<h2>Sign Up</h2>
 			<div className = "form-group">
 			<input
 			className="formControl"
@@ -54,8 +52,16 @@ class SignUp extends Component{
 			>Sign Up</button>
 			</div>
 			<div>{this.state.error.message}</div>
-			<div><Link to={"/signin"}>Already a user? Sign in instead</Link></div>
+			<button
+			className = "btn btn-warning"
+			onClick={() =>
+										browserHistory.push("/signin")
+									}
+
+									>Already a user? Sign in instead</button>
 			</div>
+			
+		
 			</div>
 			</div>
 			)

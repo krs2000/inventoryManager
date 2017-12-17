@@ -3,8 +3,6 @@ import ReactDOM from "react-dom";
 import {Provider} from 'react-redux';
 import {createStore} from 'redux';
 import {Router,Route,browserHistory} from 'react-router';
-
-
 import {firebaseApp} from './firebase';
 import {logUser} from './actions';
 import reducer from './reducers';
@@ -16,8 +14,10 @@ import Inventory from './Components/Inventory';
 import Receipt from './Components/Receipt';
 import Ticket from './Components/Ticket';
 import Transactions from './Components/Transactions';
+import Options from './Components/Options';
 
-import Styles from "./Styles/style.css"
+
+import "./Styles/style.css"
 
 const store =createStore(reducer,
 	window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__()
@@ -44,13 +44,14 @@ if (user){
 
 ReactDOM.render(
 <Provider store={store}>
-<Router path="/" history={browserHistory}>
+<Router history={browserHistory}>
 <Route path="/Start" component = {Start} />
 <Route path="/Signin" component = {SignIn}/>
 <Route path="/Signup" component = {SignUp}/>
 <Route path="/Inventory" component = {Inventory}/>
 <Route path="/Receipt" component = {Receipt}/>
 <Route path="/Ticket" component = {Ticket}/>
+<Route path="/Options" component = {Options}/>
 <Route path="/Transactions" component = {Transactions}/>
 </Router>
 </Provider>

@@ -1,60 +1,68 @@
 .whiteFont {
-	color:white;
+    color: white;
 }
 
 
-
-a:link {
-	text-decoration: none;
-}
-a:visited {color: purple;}
-a:hover {color: #69c;
-text-decoration: none;}
-a:active {color: #69c;}
-
-
-
-.smallMarginBottom{
-	margin-bottom: 20px
+.smallMarginBottom {
+    margin-bottom: 20px;
 }
 
-.logo{
-	width:150px;
-	height:100px;
+.logo {
+    width: 150px;
+    height: 100px;
 }
 
-.paddingTop25{
-	padding-top:25px;
+.paddingTop25 {
+    padding-top: 25px;
 }
 
-
-.containerSign{
-	  display: flex;
-	  justify-content:center;
-
-}
-
-.logged{
-	padding-top:10px;
-	color:white;
-	font-size: 12px;
+.containerSign {
+    display: flex;
+    justify-content: center;
 }
 
 body {
-  background: url(../img/bg.jpg);
-    background-repeat:no-repeat;
-   background-size:cover;
+    background: url(../img/bg.jpg);
+    background-repeat: no-repeat;
+    background-size: cover;
+}
+
+.bgWhite {
+    background: white;
+    opacity: 0.9;
+}
+
+.center {
+    display: flex;
+    justify-content: center;
 }
 
 
-.bgWhite{
-	 background: white;
-	  opacity: 0.9;
+
+
+@-webkit-keyframes bounce {
+    0%, 20%, 50%, 80%, 100% {-webkit-transform: translateY(0);}
+    40% {-webkit-transform: translateY(-20px) }
+    60% {-webkit-transform: translateY(-10px);}
+} 
+@keyframes bounce {
+    0%, 20%, 50%, 80%, 100% {transform: translateY(0);}
+    40% {transform: translateY(-20px);}
+    60% {transform: translateY(-10px);}
+} 
+
+.bounce {
+    -webkit-animation-duration: 1s;
+    animation-duration: 1s;
+    -webkit-animation-name: bounce;
+    animation-name: bounce;
 }
 
-.center{
 
-	  display: flex;
-	  justify-content:center;
 
+@media only screen and (max-width: 768px) {
+    /* For mobile phones: */
+  .chart{
+    display: none;
+  }
 }

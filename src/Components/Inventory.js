@@ -5,8 +5,8 @@ import TableItems from "./TableItems";
 import Navigation from "./Navigation";
 import SimpleBarChart from "./chart";
 import { add_item } from "../actions";
-import { store } from "../index";
 import { firebaseDb } from "../firebase";
+
 class Inventory extends Component {
 	constructor(props) {
 		super(props);
@@ -18,19 +18,16 @@ class Inventory extends Component {
 			category: "",
 			uniqueName: true
 		};
-
 		this.handleClick = this.handleClick.bind(this);
 	}
 
 	addItem() {
-	
 		const { name, description, category, amount } = this.state;
 		const itemId = Math.random();
 		const user = this.props.user;
 		this.setState({
 			uniqueName:false
 		})
-
 		firebaseDb
 			.ref(this.props.userDb + "/Items")
 			.push({ itemId, name, description, category, amount, user });
@@ -42,13 +39,6 @@ class Inventory extends Component {
 		});
 	}
 
-	validate(email, password) {
-		// true means invalid, so our conditions got reversed
-		return {
-			email: email.length === 0,
-			password: password.length === 0
-		};
-	}
 
 	componentDidMount() {
 		firebaseDb.ref(this.props.userDb + "/Items").on("value", snap => {
@@ -82,7 +72,7 @@ class Inventory extends Component {
 		return (
 			<div>
 				<Navigation />
-				<div>
+				<div className="smallMarginBottom">
 					<button
 						className="btn btn-warning smallMarginBottom"
 						type="button"
@@ -108,13 +98,11 @@ class Inventory extends Component {
 												let i = 0;
 												i < this.props.items.length;
 												i++
-											) {
-												console.log("check");
+											) {			
 												if (
 													event.target.value ===
 													this.props.items[i].name
 												) {
-													console.log("checkx");
 													this.setState({
 														uniqueName: false
 													});
@@ -126,7 +114,6 @@ class Inventory extends Component {
 														uniqueName: true
 													});
 												}
-												console.log(this.state);
 											}
 										}
 									}}
@@ -172,7 +159,7 @@ class Inventory extends Component {
 						</div>
 					)}
 				</div>
-				<hr />
+				
 				<div className="smallMarginBottom center">
 					<SimpleBarChart products={this.props.items} />
 				</div>
