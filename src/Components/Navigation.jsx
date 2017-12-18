@@ -6,6 +6,7 @@ import logo from "../img/logo.png";
 import { connect } from "react-redux";
 
 class Navigation extends Component {
+
 	signOut() {
 		firebaseApp.auth().signOut();
 	}
@@ -78,7 +79,7 @@ class Navigation extends Component {
 								
 								<MenuItem divider/>
 								<MenuItem 
-								onClick={() => this.signOut()}>
+								onClick={this.signOut.bind(this)}>
 									Sign Out
 								</MenuItem>
 								

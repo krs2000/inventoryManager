@@ -19,26 +19,11 @@ class Inventory extends Component {
 			uniqueName: true
 		};
 		this.handleClick = this.handleClick.bind(this);
+		this.handleName = this.handleName.bind(this);
+		this.handleCategory = this.handleCategory.bind(this);
+		this.handleDescription = this.handleDescription.bind(this);
+		this.addItem = this.addItem.bind(this);
 	}
-
-	addItem() {
-		const { name, description, category, amount } = this.state;
-		const itemId = Math.random();
-		const user = this.props.user;
-		this.setState({
-			uniqueName:false
-		})
-		firebaseDb
-			.ref(this.props.userDb + "/Items")
-			.push({ itemId, name, description, category, amount, user });
-	}
-
-	handleClick() {
-		this.setState({
-			active: !this.state.active
-		});
-	}
-
 
 	componentDidMount() {
 		firebaseDb.ref(this.props.userDb + "/Items").on("value", snap => {
@@ -68,6 +53,54 @@ class Inventory extends Component {
 		});
 	}
 
+	addItem() {
+		const { name, description, category, amount } = this.state;
+		const itemId = Math.random();
+		const user = this.props.user;
+		this.setState({
+			uniqueName: false
+		});
+		firebaseDb
+			.ref(this.props.userDb + "/Items")
+			.push({ itemId, name, description, category, amount, user });
+	}
+
+	handleClick() {
+		this.setState({
+			active: !this.state.active
+		});
+	}
+
+	handleName(e) {
+		if (this.props.items.length === 0) {
+			this.setState({
+				name: e.target.value
+			});
+		} else {
+			for (let i = 0; i < this.props.items.length; i++) {
+				if (e.target.value === this.props.items[i].name) {
+					this.setState({
+						uniqueName: false
+					});
+					break;
+				} else {
+					this.setState({
+						name: e.target.value,
+						uniqueName: true
+					});
+				}
+			}
+		}
+	}
+
+	handleCategory(e) {
+		this.setState({ category: e.target.value });
+	}
+
+	handleDescription(e) {
+		this.setState({ description: e.target.value });
+	}
+
 	render() {
 		return (
 			<div>
@@ -88,58 +121,22 @@ class Inventory extends Component {
 									className="form-control"
 									placeholder="Item Name"
 									required
-									onChange={event => {
-										if (this.props.items.length === 0) {
-											this.setState({
-												name: event.target.value
-											});
-										} else {
-											for (
-												let i = 0;
-												i < this.props.items.length;
-												i++
-											) {			
-												if (
-													event.target.value ===
-													this.props.items[i].name
-												) {
-													this.setState({
-														uniqueName: false
-													});
-													break;
-												} else {
-													this.setState({
-														name:
-															event.target.value,
-														uniqueName: true
-													});
-												}
-											}
-										}
-									}}
+									onChange={this.handleName}
 								/>
 
 								<input
 									className="form-control"
 									placeholder="description"
 									required
-									onChange={event =>
-										this.setState({
-											description: event.target.value
-										})
-									}
+									onChange={this.handleDescription}
 								/>
 								<input
 									className="form-control"
 									placeholder="category"
 									required
-									onChange={event =>
-										this.setState({
-											category: event.target.value
-										})
-									}
+									onChange={this.handleCategory}
 								/>
-							</div>								
+							</div>
 							<button
 								disabled={
 									!(
@@ -151,15 +148,17 @@ class Inventory extends Component {
 								}
 								type="button"
 								className="btn btn-success"
-								onClick={() => this.addItem()}
+								onClick={this.addItem}
 							>
 								Confirm
 							</button>
-							{!this.state.uniqueName && <div>This item is already added</div>}
+							{!this.state.uniqueName && (
+								<div>This item is already added</div>
+							)}
 						</div>
 					)}
 				</div>
-				
+
 				<div className="smallMarginBottom center">
 					<SimpleBarChart products={this.props.items} />
 				</div>

@@ -13,6 +13,9 @@ class Options extends Component {
 			error: ""
 		};
 		this.deleteUser = this.deleteUser.bind(this);
+		this.handlePassoword = this.handlePassoword.bind(this);
+		this.handleDelete = this.handleDelete.bind(this);
+		this.handleX = this.handleX.bind(this);
 	}
 
 	deleteUser() {
@@ -43,6 +46,23 @@ class Options extends Component {
 			});
 	}
 
+	handlePassoword(e) {
+		this.setState({
+			password: e.target.value
+		});
+	}
+
+	handleDelete() {
+		this.setState({ delete: true });
+	}
+
+	handleX() {
+		this.setState({
+			delete: false,
+			error: ""
+		});
+	}
+
 	render() {
 		return (
 			<div>
@@ -58,29 +78,21 @@ class Options extends Component {
 								<input
 									type="password"
 									name="password"
-									placeholder="Confirm Old Password"
+									placeholder="Confirm Password"
 									className="form-control smallMarginBottom"
-									onChange={event =>
-										this.setState({
-											password: event.target.value
-										})
-									}
+									onChange={this.handlePassoword}
 								/>
 							</Col>
 							<Row>
 								<button
-									onClick={() => this.deleteUser()}
+									onClick={this.deleteUser}
 									className="btn btn-basic"
 								>
 									Confirm
 								</button>
 
 								<button
-									onClick={() =>
-										this.setState({
-											delete: false,
-											error: ""
-										})
+									onClick={this.handleX
 									}
 									className="btn btn-danger"
 								>
@@ -92,7 +104,7 @@ class Options extends Component {
 				)}
 				<Row className="center">
 					<button
-						onClick={() => this.setState({ delete: true })}
+						onClick={this.handleDelete}
 						className="btn btn-warning"
 					>
 						Delete account

@@ -20,6 +20,13 @@ class Ticket extends Component {
 			reference: "",
 			uniqueName: true
 		};
+
+		this.handleReference = this.handleReference.bind(this);
+		this.handleDate = this.handleDate.bind(this);
+		this.handleName = this.handleName.bind(this);
+		this.handlePrice = this.handlePrice.bind(this);
+		this.handleAmount = this.handleAmount.bind(this);
+		this.addTicket = this.addTicket.bind(this);
 	}
 
 	addTicket() {
@@ -80,6 +87,49 @@ void element.offsetWidth;
 element.classList.add("bounce");
 	}
 
+
+	handleReference(e) {
+		if (this.props.receipts.length === 0) {
+			this.setState({
+				reference: e.target.value
+			});
+		} else {
+			for (let i = 0; i < this.props.items.length; i++) {
+				if (e.target.value === this.props.items[i].name) {
+					this.setState({
+						uniqueName: false
+					});
+					break;
+				} else {
+					this.setState({
+						reference: e.target.value,
+						uniqueName: true
+					});
+				}
+			}
+		}
+	}
+
+	handleDate(date) {
+		this.setState({
+			date
+		});
+	}
+
+	handleName(e){
+		this.setState({ name: e.target.value })
+	}
+
+	handlePrice(e){
+		this.setState({ price: e.target.value})
+	}
+
+	handleAmount(e){
+		this.setState({ amount: e.target.value})
+	}
+
+
+
 	render() {
 		return (
 			<div>
@@ -90,42 +140,11 @@ element.classList.add("bounce");
 							<input
 								placeholder="Receipt Reference"
 								className="form-control smallMarginBottom"
-									onChange= {event => {
-										if (this.props.receipts.length === 0) {
-											this.setState({
-												reference: event.target.value
-											});
-										} else {
-											for (
-												let i = 0;
-												i < this.props.items.length;
-												i++
-											) {			
-												if (
-													event.target.value ===
-													this.props.items[i].name
-												) {
-													this.setState({
-														uniqueName: false
-													});
-													break;
-												} else {
-													this.setState({
-														reference:
-															event.target.value,
-														uniqueName: true
-													});
-												}
-											}
-										}
-									}}
+									onChange= {this.handleReference}
 							/>
 							<DatePicker
 								selected={this.state.date}
-								onChange={date =>
-									this.setState({
-										date
-									})
+								onChange={this.handleDate
 								}
 								className="form-control smallMarginBottom "
 							/>
@@ -133,8 +152,7 @@ element.classList.add("bounce");
 						<Col xs={12} md={2} className="smallMarginBottom">
 							<select
 								className="form-control"
-								onChange={event =>
-									this.setState({ name: event.target.value })
+								onChange={this.handleName
 								}
 							>
 								<option>Choose</option>
@@ -152,10 +170,7 @@ element.classList.add("bounce");
 								placeholder="amount"
 								className="form-control"
 								type="number"
-								onChange={event =>
-									this.setState({
-										amount: event.target.value
-									})
+								onChange={this.handleAmount
 								}
 							/>
 						</Col>
@@ -164,8 +179,7 @@ element.classList.add("bounce");
 								placeholder="price"
 								className="form-control"
 								type="number"
-								onChange={event =>
-									this.setState({ price: event.target.value })
+								onChange={this.handlePrice
 								}
 							/>
 						</Col>
@@ -183,7 +197,7 @@ element.classList.add("bounce");
 								type="button"
 								className="btn btn-success"
 								id= "addTicket"
-								onClick={() => this.addTicket()}
+								onClick={this.addTicket}
 							>
 								Add Ticket
 							</button>
