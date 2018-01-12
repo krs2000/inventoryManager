@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import { firebaseApp } from "../firebase";
-import logo from "../img/logoBlack.png";
+import logo from "../img/logo.png";
 import { browserHistory } from "react-router";
 
 class SignIn extends Component {
@@ -37,11 +37,11 @@ class SignIn extends Component {
 
 	render() {
 		return (
-			<div>
+			<div >
+			
+				<p className="logoContainer"><img src={logo} alt="logo"/></p>
 				<div className="containerSign">
-					<img src={logo} alt="logo" className="logo" />
-				</div>
-				<div className="containerSign">
+
 					<div className="form-inline">
 						<div className="form-group">
 							<input

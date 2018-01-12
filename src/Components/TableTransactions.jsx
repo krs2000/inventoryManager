@@ -52,7 +52,7 @@ class TableTransactions extends Component {
         <BootstrapTable
           data={this.props.receipts}
           selectRow={selectRowProp}
-          className="bgWhite "
+          className="table"
         >
           <TableHeaderColumn dataField="type">Type</TableHeaderColumn>
           <TableHeaderColumn dataField="name">Product Name</TableHeaderColumn>

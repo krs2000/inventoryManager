@@ -1,5 +1,4 @@
 import React, {Component} from 'react';
-import Navigation from "./Navigation";
 import TableTransactions from './TableTransactions';
 import { firebaseDb } from "../firebase";
 import { connect } from "react-redux";
@@ -42,8 +41,8 @@ class Transactions extends Component{
 
 	render(){
 		return(
-    <div>
-   	<Navigation/>
+    <div className="subContent">
+
 
    <TableTransactions data={this.props.receipts}/>
     </div>

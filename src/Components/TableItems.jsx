@@ -36,7 +36,7 @@ class TableItems extends Component {
               >
                 Delete Item
               </button>
-        <BootstrapTable data={this.props.products} selectRow={selectRowProp} className="bgWhite" >
+        <BootstrapTable data={this.props.products} selectRow={selectRowProp} className="table" >
           <TableHeaderColumn dataField="name" isKey>Product Name</TableHeaderColumn>
           <TableHeaderColumn dataField="description">
             Description

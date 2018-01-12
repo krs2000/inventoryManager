@@ -1,8 +1,6 @@
 import React, { Component } from "react";
-import { Col, Grid } from "react-bootstrap";
 import { connect } from "react-redux";
 import { add_receipt } from "../actions";
-import Navigation from "./Navigation";
 import { firebaseDb } from "../firebase";
 import DatePicker from "react-datepicker";
 import moment from "moment";
@@ -113,96 +111,72 @@ class Receipt extends Component {
 		});
 	}
 
-	handleName(e){
-		this.setState({ name: e.target.value })
+	handleName(e) {
+		this.setState({ name: e.target.value });
 	}
 
-	handlePrice(e){
-		this.setState({ price: e.target.value})
+	handlePrice(e) {
+		this.setState({ price: e.target.value });
 	}
 
-	handleAmount(e){
-		this.setState({ amount: e.target.value})
+	handleAmount(e) {
+		this.setState({ amount: e.target.value });
 	}
 	render() {
 		return (
-			<div>
-				<Navigation />
-				<Grid>
-					<form className="form-group">
-						<Col xs={12} md={3} className="receiptReferenceAndDate">
-							<input
-								placeholder="Receipt Reference"
-								className="form-control smallMarginBottom"
-								onChange={this.handleReference}
-							/>
-
-							<DatePicker
-								selected={this.state.date}
-								onChange={this.handleDate}
-								className="form-control smallMarginBottom "
-							/>
-						</Col>
-						<Col xs={12} md={2} className="smallMarginBottom">
-							<select
-								className="form-control"
-								onChange={this.handleName
-									
-								}
-							>
-								<option>Choose</option>
-								{this.props.items.map(item => {
-									return (
-										<option key={item.itemId}>
-											{item.name}
-										</option>
-									);
-								})}
-							</select>
-						</Col>
-						<Col xs={12} md={2} className="smallMarginBottom">
-							<input
-								placeholder="amount"
-								className="form-control"
-								type="number"
-								onChange={this.handleAmount
-									
-								}
-							/>
-						</Col>
-						<Col xs={12} md={2} className="smallMarginBottom">
-							<input
-								placeholder="price"
-								className="form-control"
-								type="number"
-								onChange={this.handlePrice
-								}
-							/>
-						</Col>
-						<Col xs={12} md={2} className="smallMarginBottom">
-							<button
-								disabled={
-									!(
-										this.state.reference.length > 0 &&
-										this.state.price.length > 0 &&
-										this.state.name.length > 0 &&
-										this.state.amount.length > 0 &&
-										this.state.uniqueName
-									)
-								}
-								type="button"
-								id="addReceipt"
-								className="btn btn-info "
-								onClick={this.addReceipt}
-							>
-								Add Receipt
-							</button>
-							{!this.state.uniqueName && (
-								<div>This reference is already added</div>
-							)}
-						</Col>
-					</form>
-				</Grid>
+			<div class="subContent">
+				<form className="form-group">
+					<select className="form-control" onChange={this.handleName}>
+						<option>Choose</option>
+						{this.props.items.map(item => {
+							return (
+								<option key={item.itemId}>{item.name}</option>
+							);
+						})}
+					</select>
+					<input
+						placeholder="Receipt Reference"
+						className="form-control"
+						onChange={this.handleReference}
+					/>
+					<DatePicker
+						selected={this.state.date}
+						onChange={this.handleDate}
+						className="form-control "
+					/>
+					<input
+						placeholder="amount"
+						className="form-control"
+						type="number"
+						onChange={this.handleAmount}
+					/>
+					<input
+						placeholder="price"
+						className="form-control"
+						type="number"
+						onChange={this.handlePrice}
+					/>
+					<button
+						disabled={
+							!(
+								this.state.reference.length > 0 &&
+								this.state.price.length > 0 &&
+								this.state.name.length > 0 &&
+								this.state.amount.length > 0 &&
+								this.state.uniqueName
+							)
+						}
+						type="button"
+						id="addReceipt"
+						className="btn btn-info "
+						onClick={this.addReceipt}
+					>
+						Add Receipt
+					</button>
+					{!this.state.uniqueName && (
+						<div>This reference is already added</div>
+					)}
+				</form>
 			</div>
 		);
 	}

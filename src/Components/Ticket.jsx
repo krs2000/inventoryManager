@@ -1,9 +1,7 @@
 import React, { Component } from "react";
-import { Col, Grid } from "react-bootstrap";
 import { connect } from "react-redux";
 import DatePicker from "react-datepicker";
 import { add_receipt } from "../actions";
-import Navigation from "./Navigation";
 import moment from "moment";
 
 import { firebaseDb } from "../firebase";
@@ -132,24 +130,8 @@ element.classList.add("bounce");
 
 	render() {
 		return (
-			<div>
-				<Navigation />
-				<Grid>
-					<form className="form-group">
-						<Col xs={12} md={3} className="receiptReferenceAndDate">
-							<input
-								placeholder="Receipt Reference"
-								className="form-control smallMarginBottom"
-									onChange= {this.handleReference}
-							/>
-							<DatePicker
-								selected={this.state.date}
-								onChange={this.handleDate
-								}
-								className="form-control smallMarginBottom "
-							/>
-						</Col>
-						<Col xs={12} md={2} className="smallMarginBottom">
+			<div className="subContent">		
+					<form className="form-group">					
 							<select
 								className="form-control"
 								onChange={this.handleName
@@ -163,18 +145,25 @@ element.classList.add("bounce");
 										</option>
 									);
 								})}
-							</select>
-						</Col>
-						<Col xs={12} md={2} className="smallMarginBottom">
+							</select>					
+							<input
+								placeholder="Receipt Reference"
+								className="form-control"
+									onChange= {this.handleReference}
+							/>
+							<DatePicker
+								selected={this.state.date}
+								onChange={this.handleDate
+								}
+								className="form-control"
+							/>			
 							<input
 								placeholder="amount"
 								className="form-control"
 								type="number"
 								onChange={this.handleAmount
 								}
-							/>
-						</Col>
-						<Col xs={12} md={2} className="smallMarginBottom">
+							/>					
 							<input
 								placeholder="price"
 								className="form-control"
@@ -182,8 +171,6 @@ element.classList.add("bounce");
 								onChange={this.handlePrice
 								}
 							/>
-						</Col>
-						<Col xs={12} md={2} className="smallMarginBottom">
 							<button
 								disabled={
 									!(
@@ -201,10 +188,8 @@ element.classList.add("bounce");
 							>
 								Add Ticket
 							</button>
-								{!this.state.uniqueName && <div>This reference is already added</div>}
-						</Col>
+								{!this.state.uniqueName && <div>This reference is already added</div>}				
 					</form>
-				</Grid>
 			</div>
 		);
 	}

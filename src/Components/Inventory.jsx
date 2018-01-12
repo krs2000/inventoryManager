@@ -1,8 +1,6 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
-
 import TableItems from "./TableItems";
-import Navigation from "./Navigation";
 import SimpleBarChart from "./chart";
 import { add_item } from "../actions";
 import { firebaseDb } from "../firebase";
@@ -102,10 +100,12 @@ class Inventory extends Component {
 	}
 
 	render() {
+
+
+
 		return (
-			<div>
-				<Navigation />
-				<div className="smallMarginBottom">
+
+			<div class="subContent">
 					<button
 						className="btn btn-warning smallMarginBottom"
 						type="button"
@@ -157,14 +157,9 @@ class Inventory extends Component {
 							)}
 						</div>
 					)}
-				</div>
-
-				<div className="smallMarginBottom center">
 					<SimpleBarChart products={this.props.items} />
-				</div>
-				<div className="pt-4">
 					<TableItems products={this.props.items} />
-				</div>
+			
 			</div>
 		);
 	}

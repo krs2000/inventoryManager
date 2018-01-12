@@ -48,11 +48,6 @@ ReactDOM.render(
 <Route path="/Start" component = {Start} />
 <Route path="/Signin" component = {SignIn}/>
 <Route path="/Signup" component = {SignUp}/>
-<Route path="/Inventory" component = {Inventory}/>
-<Route path="/Receipt" component = {Receipt}/>
-<Route path="/Ticket" component = {Ticket}/>
-<Route path="/Options" component = {Options}/>
-<Route path="/Transactions" component = {Transactions}/>
 </Router>
 </Provider>
 , document.getElementById('root')

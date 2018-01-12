@@ -1,7 +1,5 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
-import Navigation from "./Navigation";
-import { Col, Row } from "react-bootstrap";
 import * as firebase from "firebase";
 
 class Options extends Component {
@@ -65,51 +63,39 @@ class Options extends Component {
 
 	render() {
 		return (
-			<div>
-				<Navigation />
+			<div className="subContent">
 				{this.state.delete && (
 					<div>
-						<Row className="center">
-							<Col
-								xs={3}
-								md={3}
-								className="receiptReferenceAndDate"
-							>
 								<input
 									type="password"
 									name="password"
 									placeholder="Confirm Password"
 									className="form-control smallMarginBottom"
 									onChange={this.handlePassoword}
-								/>
-							</Col>
-							<Row>
+								/>					
 								<button
 									onClick={this.deleteUser}
 									className="btn btn-basic"
 								>
 									Confirm
 								</button>
-
 								<button
 									onClick={this.handleX
 									}
 									className="btn btn-danger"
 								>
 									X
-								</button>
-							</Row>
-						</Row>
+								</button>					
 					</div>
 				)}
-				<Row className="center">
+				<div className="center">
 					<button
 						onClick={this.handleDelete}
 						className="btn btn-warning"
 					>
 						Delete account
 					</button>
-				</Row>
+				</div>
 				{this.state.error.length > 0 && (
 					<div className="center">{this.state.error}</div>
 				)}
